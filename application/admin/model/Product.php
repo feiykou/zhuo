@@ -13,5 +13,15 @@ use think\Model;
 
 class Product extends Model
 {
+    /**
+     * 获取全部的数据
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    public function getAllData(){
+        $data = [
+            'deleted' => 1
+        ];
 
+        return $this->where($data)->select();
+    }
 }

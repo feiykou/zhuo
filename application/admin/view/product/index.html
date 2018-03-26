@@ -3,6 +3,15 @@
 <meta name="description" content="">
 <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 <title>电商cms</title>
+<style>
+    .reorder input{
+        width:56px;
+        border:1px solid #ccc;
+        box-sizing: border-box;
+        padding-left: 5px;
+        color: #666;
+    }
+</style>
 {/block}
 
 
@@ -54,6 +63,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {volist name="proData" id="data"}
                         <tr data-id="">
                             <td class="inbox-checkbox">
                                 <div class="checkbox i-checks">
@@ -62,17 +72,17 @@
                                     </label>
                                 </div>
                             </td>
+                            <td class="view-message">{$data.name}</td>
+                            <td class="view-message reorder"><input type="text" value="{$data.reorder}"></td>
                             <td class="view-message"></td>
-                            <td class="view-message"></td>
-                            <td class="view-message"></td>
-                            <td class="view-message"></td>
-                            <td class="view-message"></td>
-                            <td class="view-message"></td>
-                            <td class="view-message"></td>
-                            <td class="view-message"></td>
-                            <td class="view-message"><span class="btn btn-primary btn-xs mr10 btn-del" data-id="" data-toggle="modal" data-target="#del-modal">删除</span> <a href="" class="btn btn-primary btn-xs">编辑</a></td>
+                            <td class="view-message">{$data.price}</td>
+                            <td class="view-message">{$data.stock}</td>
+                            <td class="view-message">{if condition="$data.status == 1"}上架{else/}下架{/if}</td>
+                            <td class="view-message">{$data.category_id}</td>
+                            <td class="view-message">{$data.publisher}</td>
+                            <td class="view-message"><span class="btn btn-primary btn-xs mr10 btn-del" data-id="{$data.id}" data-toggle="modal" data-target="#del-modal">删除</span> <a href="" class="btn btn-primary btn-xs">编辑</a></td>
                         </tr>
-
+                        {/volist}
                     </tbody>
                 </table>
                 <nav class="paging-wrap" aria-label="...">
