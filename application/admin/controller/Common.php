@@ -36,6 +36,7 @@ class Common extends Controller
             'Index/index',
             'User/logout'
         ];
+
         if(session('id') != 1){
             if(!in_array($name,$notCheck)){
                 if(!$auth->check($name,session('id'))){

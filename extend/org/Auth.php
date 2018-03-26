@@ -78,7 +78,7 @@ class Auth {
         'auth_group'        => 'auth_group',        // 用户组数据表名
         'auth_group_access' => 'auth_group_access', // 用户-用户组关系表
         'auth_rule'         => 'auth_rule',         // 权限规则表
-        'auth_user'         => 'auth_member'             // 用户信息表
+        'user'         => 'user'             // 用户信息表
     );
     
     public function __construct() {
@@ -99,6 +99,7 @@ class Auth {
             return true;
         }
         $authList = $this->getAuthList($uid, $type); //获取用户需要验证的所有有效规则列表
+
         if (is_string($name)) {
             $name = strtolower($name);
 //            if (strpos($name, ',') !== false) {
@@ -108,13 +109,17 @@ class Auth {
 //            }
             $name = strpos($name, ',') !== false ? explode(',', $name) : [$name];
         }
+
         $list = []; //保存验证通过的规则名
         if ($mode == 'url') {
             $REQUEST = unserialize(strtolower(serialize($_REQUEST)));
         }
         foreach ($authList as $auth) {
+
             $query = preg_replace('/^.+\?/U', '', $auth);
+
             if ($mode == 'url' && $query != $auth) {
+
                 parse_str($query, $param); //解析规则中的param
                 $intersect = array_intersect_assoc($REQUEST, $param);
                 $auth = preg_replace('/\?.*$/U', '', $auth);
@@ -122,9 +127,11 @@ class Auth {
                     $list[] = $auth;
                 }
             } else if (in_array($auth, $name)) {
+
                 $list[] = $auth;
             }
         }
+
         if ($relation == 'or' and ! empty($list)) {
             return true;
         }
@@ -167,6 +174,7 @@ class Auth {
         }
         //读取用户所属用户组
         $groups = $this->getGroups($uid);
+
         $ids = []; //保存用户所属用户组设置的所有权限规则id
         foreach ($groups as $g) {
             $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
@@ -186,19 +194,26 @@ class Auth {
         //循环规则，判断结果。
         $authList = [];   //
         foreach ($rules as $rule) {
+
             if (!empty($rule['condition'])) { //根据condition进行验证
+                //根据condition进行验证
                 $this->getUserInfo($uid); //获取用户信息,一维数组
                 $command = preg_replace('/\{(\w*?)\}/', '$user[\'\\1\']', $rule['condition']);
                 @(eval('$condition=(' . $command . ');'));
-                $condition && $authList[] = strtolower($rule['name']);
+                if (!$condition) {
+                    $authList[] = strtolower($rule['name']);
+                }
+                var_dump($command);
             } else {
                 $authList[] = strtolower($rule['name']); //只要存在就记录
             }
-        }
+        };
+
         $_authList[$uid . $t] = $authList;
         if ($this->config['auth_type'] == 2) {
             $_SESSION['_auth_list_' . $uid . $t] = $authList; //规则列表结果保存到session
         }
+
         return array_unique($authList);
     }
     /**
@@ -207,7 +222,7 @@ class Auth {
     protected function getUserInfo($uid) {
         static $userinfo = [];
         if (!isset($userinfo[$uid])) {
-            $userinfo[$uid] = Db::name($this->config['auth_user'])->where(['uid' => $uid])->find();
+            $userinfo[$uid] = Db::name($this->config['user'])->where(['id' => $uid])->find();
         }
         return $userinfo[$uid];
     }

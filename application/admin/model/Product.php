@@ -24,4 +24,8 @@ class Product extends Model
 
         return $this->where($data)->select();
     }
+
+    public function cate(){
+        return $this->hasMany('ArtCate')->field('name');
+    }
 }

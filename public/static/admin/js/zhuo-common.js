@@ -13,9 +13,9 @@ var reqAjaxJson = {
         var that = this;
         $.ajax({
             url:opts.url,
-            data:opts.reqData,
-            type:'POST',
-            dataType:'json',
+            data:opts.reqData || '',
+            type:opts.method || 'POST',
+            dataType:opts.dataType || 'json',
             success:function(data){
                 opts.modalDom && opts.modalDom.modal('hide');
                 that.funType = that.funArr[data.code]; //返回的是数据状态
