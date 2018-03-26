@@ -22,9 +22,11 @@ class Product extends Common
 
     public function index(){
 
+        $proData = $this->model->getAllData();
 
-
-        return $this->fetch();
+        return $this->fetch('',[
+            'proData' => $proData
+        ]);
     }
 
     // 添加页面
