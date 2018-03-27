@@ -5,18 +5,18 @@
     <div class='modal-body'>
         <div class='form-group'>
             <label class='control-label'>权限名</label>
-            <input type='text' class='form-control' name='name' value="{$curIdData.name}">
+            <input type='text' class='form-control' name='title' value="{$curIdData.name}">
         </div>
         <div class='form-group'>
             <label class='control-label'>链接</label>
-            <input type='text' class='form-control' name='condition' value="{$curIdData.condition}">
+            <input type='text' class='form-control' name='name' value="{$curIdData.condition}">
         </div>
         <div class='form-group '>
             <label class='control-label'>父级权限</label>
             <select class='form-control' name='pid'>
                 <option value='0'>顶级权限</option>
                 {volist name="sortData" id="data"}
-                <option value="{$data.id}" {if condition='$curIdData.pid eq $data.id'}selected="selected"{/if}>{$data.level | str_repeat='-',###*3}{$data.name}</option>
+                <option value="{$data.id}" {if condition='$curIdData.pid eq $data.id'}selected="selected"{/if}>{$data.level | str_repeat='-',###*3}{$data.title}</option>
                 {/volist}
             </select>
         </div>

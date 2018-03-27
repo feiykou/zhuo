@@ -23,7 +23,7 @@ class Common extends Controller
         }
 
         if(session('name') == 'admin'){
-            return;
+            return true;
         }
 
         $auth = new Auth();

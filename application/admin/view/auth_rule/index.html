@@ -35,8 +35,8 @@
                           <tr class="odd gradeX">
                               <td></td>
                               <td>{$ruleList.id}</td>
-                              <td>{$ruleList.level | str_repeat='&nbsp;',###*6}{$ruleList.name}</td>
-                              <td class="hidden-phone">{$ruleList.condition}</td>
+                              <td>{$ruleList.level | str_repeat='&nbsp;',###*6}{$ruleList.title}</td>
+                              <td class="hidden-phone">{$ruleList.name}</td>
                               <td class="hidden-phone">{if condition="$ruleList.pid eq 0"}顶级权限{else/}{$ruleList.pname}{/if}</td>
                               <td class="center hidden-phone">{$ruleList.level}</td>
                               <td class="view-message"><span class="btn btn-primary btn-xs mr10 btn-del" data-id="{$ruleList.id}" data-toggle="modal" data-target="#del-modal">删除</span> <span data-target="#edit-user-modal" data-toggle="modal" data-id="{$ruleList.id}" class="btn btn-primary btn-xs btn-edit">编辑</span></td>

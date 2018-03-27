@@ -46,7 +46,7 @@ class AuthRule extends Model
     public function getSortAllData(){
         $result = self::alias('a1')
             ->where('a1.status','=',1)
-            ->field('a1.*,a2.name as pname')
+            ->field('a1.*,a2.title as pname')
             ->join('auth_rule a2','a1.pid=a2.id','left')
             ->select();
         $sortData = sortData($result);
